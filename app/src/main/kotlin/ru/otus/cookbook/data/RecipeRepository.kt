@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
 /**
- * Provides access to the list of recipes.
+ * Предоставляет доступ к списку рецептов.
  */
 class RecipeRepository(recipes: List<Recipe>) {
 
@@ -16,9 +16,9 @@ class RecipeRepository(recipes: List<Recipe>) {
     private val recipes = MutableStateFlow(recipes)
 
     /**
-     * Returns the list of recipes as a flow.
-     * @param scope The coroutine scope to use for the flow.
-     * @param filter The filter to apply to the recipes.
+     * Возвращает список рецептов в виде потока.
+     * @param scope Область видимости корутины для потока.
+     * @param filter Фильтр для применения к рецептам.
      */
     suspend fun getRecipes(scope: CoroutineScope, filter: RecipeFilter): StateFlow<List<Recipe>> = recipes
         .map { recipes -> recipes.asSequence()
@@ -29,21 +29,23 @@ class RecipeRepository(recipes: List<Recipe>) {
         .stateIn(scope)
 
     /**
-     * Returns the list of categories as a flow.
-     * @param scope The coroutine scope to use for the flow.
+     * Возвращает список категорий в виде потока.
+     * @param scope Область видимости корутины для потока.
      */
     suspend fun getCategories(scope: CoroutineScope): StateFlow<List<RecipeCategory>> = recipes
         .map { recipes ->  recipes.map { it.category }.distinct().sorted() }
         .stateIn(scope)
 
     /**
-     * Returns the recipe with the specified ID.
+     * Возвращает рецепт по указанному идентификатору.
+     * @param id Идентификатор рецепта.
+     * @return Рецепт с указанным идентификатором или null, если рецепт не найден.
      */
     fun getRecipe(id: Int): Recipe? = recipes.value.find { it.id == id }
 
     /**
-     * Returns the list of recipes as a flow.
-     * @param id The ID of the recipe to delete.
+     * Удаляет рецепт с указанным идентификатором.
+     * @param id Идентификатор рецепта для удаления.
      */
     fun deleteRecipe(id: Int) {
         recipes.update { list ->
@@ -52,8 +54,8 @@ class RecipeRepository(recipes: List<Recipe>) {
     }
 
     /**
-     * Adds a recipe to the list.
-     * @param recipe The recipe to add.
+     * Добавляет новый рецепт в список.
+     * @param recipe Рецепт для добавления.
      */
     fun addRecipe(recipe: Recipe) {
         recipes.update { list ->

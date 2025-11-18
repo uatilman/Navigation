@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="80dp"
+    android:height="80dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Фон: скруглённый квадрат -->
+    <path
+        android:fillColor="#D7D9DC"
+        android:pathData="M4,2h16a2,2 0 0 1 2,2v16a2,2 0 0 1 -2,2H4a2,2 0 0 1 -2,-2V4a2,2 0 0 1 2,-2z" />
+
+    <!-- Равносторонний треугольник (центрирован, чуть выше центра) -->
+    <path
+        android:fillColor="#6E7175"
+        android:pathData="M12,3.5 L8.5,10 L15.5,10 Z" />
+
+    <!-- Квадрат (слева, немного ниже центра) -->
+    <path
+        android:fillColor="#6E7175"
+        android:pathData="M4.5,13 H10.5 V19 H4.5 Z" />
+
+    <!-- Круг (справа, на той же высоте что и квадрат) -->
+    <path
+        android:fillColor="#6E7175"
+        android:pathData="M13.5,16
+                          a3,3 0 1 0 6,0
+                          a3,3 0 1 0 -6,0" />
+</vector>
