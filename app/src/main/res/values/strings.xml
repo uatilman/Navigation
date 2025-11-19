@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Cookbook</string>
     <string name="remove">Удалить</string>
+    <string name="no_title">Recipe</string>
+    <string name="no_description">Recipe description\n</string>
+    <string name="no_steps">Recipe not available</string>
 </resources>

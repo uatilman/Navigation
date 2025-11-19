@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.launch
+import ru.otus.cookbook.R
 import ru.otus.cookbook.data.Recipe
 import ru.otus.cookbook.data.loadImage
 import ru.otus.cookbook.databinding.FragmentRecipeBinding
@@ -38,6 +39,7 @@ class RecipeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = binding.bind(container, FragmentRecipeBinding::inflate)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.withBinding {
@@ -61,10 +63,21 @@ class RecipeFragment : Fragment() {
 
     private fun displayRecipe(recipe: Recipe) {
         binding.withBinding {
-            loadImage(recipeAvatar, recipe.imageUrl, RoundedCornersTransformation())
-            recipeTitle.text = recipe.title
-            recipeDescription.text = recipe.description
-            recipeStep.text = recipe.steps.joinToString("\n")
+            if (recipe.imageUrl.isNotEmpty()) {
+                loadImage(recipeAvatar, recipe.imageUrl, RoundedCornersTransformation())
+            } else {
+                recipeAvatar.setImageResource(R.drawable.cart_item_icon)
+            }
+
+            recipeTitle.text = recipe.title.ifEmpty { getString(R.string.no_title) }
+            recipeDescription.text =
+                recipe.description.ifEmpty { getString(R.string.no_description) }
+
+            recipeStep.text = if (recipe.steps.isNotEmpty()) {
+                recipe.steps.joinToString("\n • ", "• ")
+            } else {
+                getString(R.string.no_steps)
+            }
         }
     }
 
