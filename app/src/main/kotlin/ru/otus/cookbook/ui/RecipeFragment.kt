@@ -9,13 +9,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.MutableCreationExtras
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.launch
 import ru.otus.cookbook.data.Recipe
+import ru.otus.cookbook.data.loadImage
 import ru.otus.cookbook.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment() {
 
-    private val recipeId: Int get() = TODO("Use Safe Args to get the recipe ID: https://developer.android.com/guide/navigation/use-graph/pass-data#Safe-args")
+    private val args: RecipeFragmentArgs by navArgs()
+    private val recipeId: Int get() = args.recipeId
 
     private val binding = FragmentBindingDelegate<FragmentRecipeBinding>(this)
     private val model: RecipeFragmentViewModel by viewModels(
@@ -31,13 +36,15 @@ class RecipeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = binding.bind(
-        container,
-        FragmentRecipeBinding::inflate
-    )
+    ): View = binding.bind(container, FragmentRecipeBinding::inflate)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.withBinding {
+            topAppBar.setNavigationOnClickListener {
+                findNavController().navigate(RecipeFragmentDirections.actionBackToCookbook())
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             model.recipe
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -53,7 +60,12 @@ class RecipeFragment : Fragment() {
     }
 
     private fun displayRecipe(recipe: Recipe) {
-        // Display the recipe
+        binding.withBinding {
+            loadImage(recipeAvatar, recipe.imageUrl, RoundedCornersTransformation())
+            recipeTitle.text = recipe.title
+            recipeDescription.text = recipe.description
+            recipeStep.text = recipe.steps.joinToString("\n")
+        }
     }
 
     private fun deleteRecipe() {

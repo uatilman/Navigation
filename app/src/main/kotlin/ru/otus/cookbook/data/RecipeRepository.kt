@@ -33,7 +33,7 @@ class RecipeRepository(recipes: List<Recipe>) {
      * @param scope Область видимости корутины для потока.
      */
     suspend fun getCategories(scope: CoroutineScope): StateFlow<List<RecipeCategory>> = recipes
-        .map { recipes ->  recipes.map { it.category }.distinct().sorted() }
+        .map { recipes -> recipes.map { it.category }.distinct().sorted() }
         .stateIn(scope)
 
     /**

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.coroutines.launch
 import ru.otus.cookbook.data.RecipeListItem
@@ -38,10 +39,7 @@ class CookbookFragment : Fragment(), ItemListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = binding.bind(
-        container,
-        FragmentCookbookBinding::inflate
-    )
+    ): View = binding.bind(container, FragmentCookbookBinding::inflate)
 
     /**
      * Вызывается после создания представления фрагмента
@@ -70,7 +68,6 @@ class CookbookFragment : Fragment(), ItemListener {
             )
         )
         recycleView.adapter = recipeListDiffAdapter
-        model.recipeList
     }
 
     /**
@@ -88,7 +85,8 @@ class CookbookFragment : Fragment(), ItemListener {
      * @param id Идентификатор выбранного рецепта
      */
     override fun onItemClick(id: Int) {
-        Toast.makeText(requireContext(), "Clicked $id", Toast.LENGTH_SHORT).show()
+        findNavController()
+            .navigate(CookbookFragmentDirections.actionOpenRecipe(id))
     }
 
     /**
