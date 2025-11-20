@@ -1,7 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cookbook</string>
-    <string name="remove">Удалить</string>
-    <string name="no_title">Recipe</string>
-    <string name="no_description">Recipe description\n</string>
-    <string name="no_steps">Recipe not available</string>
+    
+    <string name="no_title">Без названия</string>
+    <string name="no_description">Нет описания</string>
+    <string name="no_steps">Нет шагов приготовления</string>
+    <string name="delete_recipe_question">Вы действительно хотите удалить </string>
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
+    <string name="delete_dialog_title">Delete</string>
 </resources>
